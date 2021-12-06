@@ -5,10 +5,10 @@ export default class Slider {
         this.btns = document.querySelectorAll(btns);
         this.slideIndex = 1;
 
-        this.visit = document.querySelector(visitBlock);
+        /* this.visit = document.querySelector(visitBlock); */
     }
 
-    showVisitBlock(index) {                
+/*     showVisitBlock(index) {                
         if (index == 3) {
             setTimeout( () => {
                 this.visit.style.display = 'block';
@@ -16,7 +16,7 @@ export default class Slider {
         } else {
             this.visit.style.display = 'none';
         }
-    }
+    } */
 
 
     showSlides(n) {
@@ -28,13 +28,28 @@ export default class Slider {
             this.slideIndex = this.slides.length;
         }
 
+        try {
+            this.hanson.style.opacity = '0';
+
+            if (n === 3) {
+                this.hanson.classList.add('animated');
+                setTimeout(() => {
+                    this.hanson.style.opacity = '1';
+                    this.hanson.classList.add('slideInUp');
+                }, 3000);
+            } else {
+                this.hanson.classList.remove('slideInUp');
+            }
+        } catch (e) {}
+        
+
         this.slides.forEach(slide => {
             slide.style.display = 'none';
         });
 
         this.slides[this.slideIndex - 1].style.display = 'block';
 
-        this.showVisitBlock(this.slideIndex);
+        /* this.showVisitBlock(this.slideIndex); */
     }
 
     plusSlides(n) {
@@ -42,6 +57,11 @@ export default class Slider {
     }
 
     render() {
+        try{
+            this.hanson = document.querySelector('.hanson');
+        } catch(e) {}
+        
+
         this.btns.forEach(item => {
             item.addEventListener('click', () => {
                 this.plusSlides(1);
