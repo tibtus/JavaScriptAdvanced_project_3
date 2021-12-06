@@ -933,7 +933,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/slider */ "./src/js/modules/slider.js");
 
 window.addEventListener('DOMContentLoaded', function () {
-  var slider = new _modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next');
+  var slider = new _modules_slider__WEBPACK_IMPORTED_MODULE_0__["default"]('.page', '.next', '.hanson');
   slider.render();
 });
 
@@ -962,16 +962,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Slider =
 /*#__PURE__*/
 function () {
-  function Slider(page, btns) {
+  function Slider(page, btns, visitBlock) {
     _classCallCheck(this, Slider);
 
     this.page = document.querySelector(page);
     this.slides = this.page.children;
     this.btns = document.querySelectorAll(btns);
     this.slideIndex = 1;
+    this.visit = document.querySelector(visitBlock);
   }
 
   _createClass(Slider, [{
+    key: "showVisitBlock",
+    value: function showVisitBlock(index) {
+      var _this = this;
+
+      if (index == 3) {
+        setTimeout(function () {
+          _this.visit.style.display = 'block';
+        }, 5000);
+      } else {
+        this.visit.style.display = 'none';
+      }
+    }
+  }, {
     key: "showSlides",
     value: function showSlides(n) {
       if (n > this.slides.length) {
@@ -986,6 +1000,7 @@ function () {
         slide.style.display = 'none';
       });
       this.slides[this.slideIndex - 1].style.display = 'block';
+      this.showVisitBlock(this.slideIndex);
     }
   }, {
     key: "plusSlides",
@@ -995,17 +1010,17 @@ function () {
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       this.btns.forEach(function (item) {
         item.addEventListener('click', function () {
-          _this.plusSlides(1);
+          _this2.plusSlides(1);
         });
         item.parentNode.previousElementSibling.addEventListener('click', function (e) {
           e.preventDefault();
-          _this.slideIndex = 1;
+          _this2.slideIndex = 1;
 
-          _this.showSlides(_this.slideIndex);
+          _this2.showSlides(_this2.slideIndex);
         });
       });
       this.showSlides(this.slideIndex);
